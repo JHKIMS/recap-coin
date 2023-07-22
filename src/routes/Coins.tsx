@@ -22,7 +22,8 @@ const Coin = styled.li`
   color: ${(props) => props.theme.bgColor};
   a {
     transition: color 0.2s ease-in;
-    display: block;
+    display: flex;
+    align-items: center;
     padding: 20px;
     /* 이 부분에 padding값+block속성을 줘서 한줄을 <Link>태그로 클릭할 수 있게 만들어줌 */
   }
@@ -40,6 +41,11 @@ const Title = styled.h1`
 const Loader = styled.span`
     display: block;
     text-align: center;
+`
+const Img = styled.img`
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
 `
 
 interface CoinInterface {
@@ -74,7 +80,12 @@ function Coins() {
         <CoinList>
         {coins.map((coin) => (
           <Coin key={coin.id}>
-            <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
+            <Link to={{
+                pathname: `/${coin.id}`,
+                state: {name: coin.name}
+            }}>
+                <Img src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}/>
+                {coin.name} &rarr;</Link>
           </Coin>
         ))}
       </CoinList>
