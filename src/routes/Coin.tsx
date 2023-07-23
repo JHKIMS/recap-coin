@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { Link, Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Switch,
+  useLocation,
+  useRouteMatch,
+} from "react-router-dom";
 import { styled } from "styled-components";
 import Price from "./Price";
 import Chart from "./Chart";
@@ -57,7 +63,7 @@ const Tabs = styled.div`
   margin: 25px 0px;
   gap: 10px;
 `;
-const Tab = styled.span<{isActive: boolean}>`
+const Tab = styled.span<{ $isActive: boolean }>`
   text-align: center;
   text-transform: uppercase;
   font-size: 12px;
@@ -65,7 +71,8 @@ const Tab = styled.span<{isActive: boolean}>`
   background-color: rgba(0, 0, 0, 0.5);
   padding: 7px 0px;
   border-radius: 10px;
-  color: ${(props)=> props.isActive ? props.theme.accentColor : props.theme.textColor};
+  color: ${(props) =>
+    props.$isActive ? props.theme.accentColor : props.theme.textColor};
   a {
     display: block;
   }
@@ -137,10 +144,16 @@ function Coin() {
   const { state } = useLocation<RouteState>();
   const priceMatch = useRouteMatch("/:coinId/price");
   const chartMatch = useRouteMatch("/:coinId/chart");
-  const {isLoading:infoLoading, data:infoData} = useQuery<InfoData>(["info",coinId], () => fetchCoinInfo(coinId));
-  const {isLoading:tickersLoading, data:tickerData} = useQuery<PriceData>(["tickers",coinId], () => fetchCoinTickers(coinId));
+  const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
+    ["info", coinId],
+    () => fetchCoinInfo(coinId)
+  );
+  const { isLoading: tickersLoading, data: tickerData } = useQuery<PriceData>(
+    ["tickers", coinId],
+    () => fetchCoinTickers(coinId)
+  );
 
-  const loading = infoLoading || tickersLoading ;
+  const loading = infoLoading || tickersLoading;
 
   return (
     <Container>
@@ -180,10 +193,10 @@ function Coin() {
           </Overview>
 
           <Tabs>
-            <Tab isActive={chartMatch !== null}>
+            <Tab $isActive={chartMatch !== null}>
               <Link to={`/${coinId}/chart`}>Chart</Link>
             </Tab>
-            <Tab isActive={priceMatch !== null}>
+            <Tab $isActive={priceMatch !== null}>
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
@@ -193,7 +206,7 @@ function Coin() {
               <Price></Price>
             </Route>
             <Route path={`/:coinId/chart`}>
-              <Chart></Chart>
+              <Chart coinId={coinId}></Chart>
             </Route>
           </Switch>
         </>
