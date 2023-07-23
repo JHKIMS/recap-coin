@@ -1,6 +1,14 @@
+const BASE_URL = `https://api.coinpaprika.com/v1`;
+
 export function fetchCoins() {
-  return fetch("https://api.coinpaprika.com/v1/coins").then((response) =>
-    response.json()
-  );
+  return fetch(`${BASE_URL}/coins`).then((response) => response.json());
 }
-// fetchCoins는 fetch함수를 fetch함수는 URL로부터 json을 return할 것이다.
+export function fetchCoinInfo(coinId: string) {
+  return fetch(`${BASE_URL}/coins/${coinId}`).then((response) => response.json());
+}
+export function fetchCoinTickers(coinId: string) {
+    return fetch(`${BASE_URL}/tickers/${coinId}`).then((response) => response.json());
+}
+// export const fetchCoinTickers = async (coinId: string) =>
+//   fetch(`${BASE_URL}/tickers/${coinId}`)
+//     .then((response) => response.json());
