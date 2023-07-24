@@ -21,7 +21,7 @@ const Coin = styled.li`
   background-color: white;
   margin-bottom: 10px;
   border-radius: 15px;
-  color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   a {
     transition: color 0.2s ease-in;
     display: flex;
