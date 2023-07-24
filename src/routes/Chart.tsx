@@ -5,7 +5,7 @@ import { styled } from "styled-components";
 
 interface ChartProps {
   coinId: string;
-  isDark: boolean;
+  // isDark: boolean;
 }
 interface IHistorical {
   time_open: number;
@@ -20,7 +20,7 @@ interface IHistorical {
 const ApexChartContainer = styled.div`
   color: black;
 `
-function Chart({ coinId, isDark }: ChartProps) {
+function Chart({ coinId }: ChartProps) {
   const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
     fetchCoinHistory(coinId)
   );
@@ -46,7 +46,7 @@ function Chart({ coinId, isDark }: ChartProps) {
               },
               grid: { show: false },
               theme: {
-                mode: isDark ? "dark" : "light",
+                mode: "light",
               },
               yaxis: {
                 show: false,
