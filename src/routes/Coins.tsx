@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "./api";
+import { Helmet } from "react-helmet";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -40,14 +41,14 @@ const Title = styled.h1`
 `;
 
 const Loader = styled.span`
-    display: block;
-    text-align: center;
-`
+  display: block;
+  text-align: center;
+`;
 const Img = styled.img`
-    width: 35px;
-    height: 35px;
-    margin-right: 10px;
-`
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+`;
 
 interface ICoin {
   id: string;
@@ -60,29 +61,36 @@ interface ICoin {
 }
 
 function Coins() {
-  const {isLoading, data} = useQuery<ICoin[]>(["allCoins"], fetchCoins);
+  const { isLoading, data } = useQuery<ICoin[]>(["allCoins"], fetchCoins);
   return (
     <Container>
+      <Helmet>
+        <title>All Coins</title>
+      </Helmet>
       <Header>
         <Title>Coins</Title>
       </Header>
       {isLoading ? (
         <Loader>"Loading..."</Loader>
-      ):(
+      ) : (
         <CoinList>
-        {data?.slice(0,10).map((coin) => (
-          <Coin key={coin.id}>
-            <Link to={{
-                pathname: `/${coin.id}`,
-                state: {name: coin.name}
-            }}>
-                <Img src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}/>
-                {coin.name} &rarr;</Link>
-          </Coin>
-        ))}
-      </CoinList>
+          {data?.slice(0, 10).map((coin) => (
+            <Coin key={coin.id}>
+              <Link
+                to={{
+                  pathname: `/${coin.id}`,
+                  state: { name: coin.name },
+                }}
+              >
+                <Img
+                  src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                />
+                {coin.name} &rarr;
+              </Link>
+            </Coin>
+          ))}
+        </CoinList>
       )}
-      
     </Container>
   );
 }
